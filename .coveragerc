@@ -1,0 +1,29 @@
+[run]
+omit =
+    taskie/tests/*
+
+    # Сваггер
+    taskie/docs.py
+
+    # Не проводим тестирование для джанговской логики
+    */serializers.py
+    */settings/*
+    */migrations/*
+    */urls.py
+    */wsgi.py
+    */asgi.py
+    */admin.py
+    */apps.py
+    */views.py
+    */models.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    if settings.DEBUG
+    raise AssertionError
+    raise NotImplementedError
+    if 0:
+    if __name__ == .__main__.:
