@@ -14,10 +14,10 @@ install: pipenv install --dev
 jobs:
   include:
     - stage: build
-    - script: docker build -t taskie .
+      script: docker build -t taskie .
 
     - stage: lint
-    - script: flake8
+      script: flake8
 
     - stage: test
-    - script: pytest
+      script: pytest
