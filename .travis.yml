@@ -21,11 +21,15 @@ jobs:
 
     - stage: test
       script: pytest
+      services: postgresql
+      before_script:
+        - psql -c 'CREATE ROLE travis_ci_test WITH PASSWORD "travis_ci_test";' -U postgres
+        - psql -c 'CREATE DATABASE travis_ci_test OWNER travis_ci_test;' -U postgres
       env:
         - DJANGO_SETTINGS_MODULE=taskie.settings.test
 
-        - POSTGRES_NAME=taskie
-        - POSTGRES_USER=taskie
-        - POSTGRES_PASSWORD=taskie
+        - POSTGRES_NAME=travis_ci_test
+        - POSTGRES_USER=travis_ci_test
+        - POSTGRES_PASSWORD=travis_ci_test
         - POSTGRES_HOST=localhost
         - POSTGRES_PORT=5432
