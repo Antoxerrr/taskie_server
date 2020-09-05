@@ -3,8 +3,8 @@ python:
   - 3.7
 
 stages:
-  - build
-  - lint
+#  - build
+#  - lint
   - test
 #  - name: deploy
 #    if: branch = master
@@ -13,11 +13,11 @@ install: pipenv install --dev
 
 jobs:
   include:
-    - stage: build
-      script: docker build -t taskie .
-
-    - stage: lint
-      script: flake8
+#    - stage: build
+#      script: docker build -t taskie .
+#
+#    - stage: lint
+#      script: flake8
 
     - stage: test
       script: pytest
