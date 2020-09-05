@@ -9,22 +9,24 @@ stages:
 #  - name: deploy
 #    if: branch = master
 
-install: pipenv install --dev
-
 jobs:
   include:
     - stage: build
+      install: skip
       script: docker build -t taskie .
 
     - stage: lint
+      install: pipenv install --dev
       script: flake8
 
     - stage: test
+      install: pipenv install --dev
       script: pytest
       services: postgresql
       before_script:
-        - psql -c 'CREATE ROLE travis_ci_test WITH PASSWORD "travis_ci_test";' -U postgres
+        - psql -c "CREATE ROLE travis_ci_test WITH SUPERUSER LOGIN PASSWORD 'travis_ci_test';" -U postgres
         - psql -c 'CREATE DATABASE travis_ci_test OWNER travis_ci_test;' -U postgres
+        - pipenv run python manage.py migrate
       env:
         - DJANGO_SETTINGS_MODULE=taskie.settings.test
 
@@ -33,3 +35,4 @@ jobs:
         - POSTGRES_PASSWORD=travis_ci_test
         - POSTGRES_HOST=localhost
         - POSTGRES_PORT=5432
+      after_success: coveralls
