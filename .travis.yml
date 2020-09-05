@@ -21,3 +21,11 @@ jobs:
 
     - stage: test
       script: pytest
+      env:
+        - DJANGO_SETTINGS_MODULE=taskie.settings.test
+
+        - POSTGRES_NAME=taskie
+        - POSTGRES_USER=taskie
+        - POSTGRES_PASSWORD=taskie
+        - POSTGRES_HOST=localhost
+        - POSTGRES_PORT=5432
