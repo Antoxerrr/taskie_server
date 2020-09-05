@@ -23,8 +23,9 @@ jobs:
       script: pytest
       services: postgresql
       before_script:
-        - psql -c 'CREATE ROLE travis_ci_test WITH PASSWORD "travis_ci_test";' -U postgres
+        - psql -c "CREATE ROLE travis_ci_test WITH PASSWORD 'travis_ci_test';" -U postgres
         - psql -c 'CREATE DATABASE travis_ci_test OWNER travis_ci_test;' -U postgres
+        - python manage.py migrate
       env:
         - DJANGO_SETTINGS_MODULE=taskie.settings.test
 
