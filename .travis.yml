@@ -9,6 +9,8 @@ stages:
 #  - name: deploy
 #    if: branch = master
 
+install: pipenv install --dev
+
 jobs:
   include:
     - stage: build
