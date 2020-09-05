@@ -3,23 +3,24 @@ python:
   - 3.7
 
 stages:
-#  - build
-#  - lint
+  - build
+  - lint
   - test
 #  - name: deploy
 #    if: branch = master
 
-install: pipenv install --dev
-
 jobs:
   include:
-#    - stage: build
-#      script: docker build -t taskie .
-#
-#    - stage: lint
-#      script: flake8
+    - stage: build
+      install: skip
+      script: docker build -t taskie .
+
+    - stage: lint
+      install: pipenv install --dev
+      script: flake8
 
     - stage: test
+      install: pipenv install --dev
       script: pytest
       services: postgresql
       before_script:
